@@ -4,7 +4,14 @@
 $script = <<SCRIPT
 
 #sudo sed -i 's/us.//g' /etc/apt/sources.list
-sudo apt-get update && apt-get install imagemagick git nginx -y
+
+sudo apt-get update
+
+sudo apt-get install software-properties-common vim curl libgd-dev -y
+
+echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections && sudo add-apt-repository -y ppa:webupd8team/java && sudo apt-get update && sudo apt-get install -y oracle-java8-installer
+
+sudo apt-get install imagemagick git nginx -y
 
 wget -P /tmp https://nodejs.org/dist/v4.1.2/node-v4.1.2-linux-x64.tar.gz
 
@@ -31,7 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node_1.vm.hostname = "node1"
 
     node_1.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "512"]
+      vb.customize ["modifyvm", :id, "--memory", "4096"]
     end
   end
 end
